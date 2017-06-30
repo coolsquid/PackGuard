@@ -3,15 +3,6 @@ package coolsquid.packguard;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import coolsquid.packguard.config.ConfigManager;
-import coolsquid.packguard.util.CommandPackGuard;
-import coolsquid.packguard.util.IntactNoticeCrashCallable;
-import coolsquid.packguard.util.ModData;
-import coolsquid.packguard.util.Util;
-import coolsquid.packguard.util.WarningCrashCallable;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -23,12 +14,23 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = PackGuard.MODID, name = PackGuard.NAME, version = PackGuard.VERSION)
+import coolsquid.packguard.config.ConfigManager;
+import coolsquid.packguard.util.CommandPackGuard;
+import coolsquid.packguard.util.IntactNoticeCrashCallable;
+import coolsquid.packguard.util.ModData;
+import coolsquid.packguard.util.Util;
+import coolsquid.packguard.util.WarningCrashCallable;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+@Mod(modid = PackGuard.MODID, name = PackGuard.NAME, version = PackGuard.VERSION, updateJSON = PackGuard.UPDATE_JSON)
 public class PackGuard {
 
 	public static final String MODID = "packguard";
 	public static final String NAME = "PackGuard";
-	public static final String VERSION = "2.3.0";
+	public static final String VERSION = "2.3.1";
+	public static final String UPDATE_JSON = "https://coolsquid.me/api/version/packguard.json";
 
 	public static final Logger LOGGER = LogManager.getLogger("PackGuard");
 
