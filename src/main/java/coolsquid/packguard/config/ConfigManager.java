@@ -5,12 +5,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import coolsquid.packguard.util.ModData;
-import coolsquid.packguard.util.Util;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
+
+import coolsquid.packguard.util.ModData;
+import coolsquid.packguard.util.Util;
 
 public class ConfigManager {
 
@@ -20,6 +21,7 @@ public class ConfigManager {
 	public static Map<String, ModData> expectedMods;
 	public static String expectedChecksum;
 	public static boolean hasShownGui;
+	public static boolean hasSentChat;
 
 	public static boolean validateChecksum;
 	public static String[] checksumPaths;
@@ -73,6 +75,7 @@ public class ConfigManager {
 		}
 
 		hasShownGui = CONFIG.getBoolean("hasShownGui", "internal", false, "Do not edit this manually.");
+		hasSentChat = CONFIG.getBoolean("hasSentChat", "internal", false, "Do not edit this manually.");
 
 		detectVersionChanges = CONFIG.getBoolean("detectVersionChanges", "general", true,
 				"Whether to look for version mismatches or not");

@@ -29,7 +29,7 @@ public class PackGuard {
 
 	public static final String MODID = "packguard";
 	public static final String NAME = "PackGuard";
-	public static final String VERSION = "2.3.1";
+	public static final String VERSION = "2.3.2";
 	public static final String UPDATE_JSON = "https://coolsquid.me/api/version/packguard.json";
 
 	public static final Logger LOGGER = LogManager.getLogger("PackGuard");
