@@ -87,7 +87,7 @@ public class ConfigManager {
 				"Whether to send warnings through chat or not.");
 		sendChatOnce = CONFIG.getBoolean("sendChatOnce", "general", true,
 				"Whether to send the chat warning once only.");
-		guiWarning = CONFIG.getBoolean("guiWarning", "general", true, "Whether to use the warning GUI or not.");
+		guiWarning = CONFIG.getBoolean("guiWarning", "general", false, "Whether to use the warning GUI or not.");
 		showGuiOnce = CONFIG.getBoolean("showGuiOnce", "general", true,
 				"Whether to display the warning GUI once only.");
 		crashReportIntactNotice = CONFIG.getBoolean("crashReportIntactNotice", "general", true,
