@@ -32,7 +32,7 @@ public class GuiTampering extends GuiScreen {
 		this.drawCenteredString(this.fontRenderer, "Do not report any errors to the pack author.", this.width / 2,
 				(int) (baseHeight - 60 * multiplier), 10526880);
 		int a = 40;
-		String[] summary = Util.getWarningSummary(false).split(System.lineSeparator());
+		String[] summary = Util.getWarningSummary(false, System.lineSeparator()).split(System.lineSeparator());
 		for (int i = 0; i < Math.min(summary.length, 12); i++) {
 			this.drawCenteredString(this.fontRenderer, summary[i], this.width / 2, (int) (baseHeight - a * multiplier),
 					10526880);

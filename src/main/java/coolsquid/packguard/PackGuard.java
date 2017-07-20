@@ -32,7 +32,7 @@ public class PackGuard {
 	public static final String VERSION = "2.3.2";
 	public static final String UPDATE_JSON = "https://coolsquid.me/api/version/packguard.json";
 
-	public static final Logger LOGGER = LogManager.getLogger("PackGuard");
+	public static final Logger LOGGER = LogManager.getFormatterLogger("PackGuard");
 
 	public static final List<String> WARNINGS = new ArrayList<>();
 	public static String checksumWarning = null;
@@ -68,7 +68,7 @@ public class PackGuard {
 				FMLCommonHandler.instance().registerCrashCallable(new WarningCrashCallable());
 			}
 			if (ConfigManager.logWarning) {
-				LOGGER.warn(Util.getWarningSummary(true));
+				LOGGER.warn("%s\n%s", "Tampering discovered: ", Util.getWarningSummary(true, System.lineSeparator()));
 			}
 			if (!WARNINGS.isEmpty() && ConfigManager.guiWarning || ConfigManager.chatWarning) {
 				MinecraftForge.EVENT_BUS.register(new ModEventHandler());
@@ -84,6 +84,7 @@ public class PackGuard {
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT && ConfigManager.developmentMode) {
 			ClientCommandHandler.instance.registerCommand(new CommandPackGuard());
 		}
+		throw new RuntimeException();
 	}
 
 	@EventHandler

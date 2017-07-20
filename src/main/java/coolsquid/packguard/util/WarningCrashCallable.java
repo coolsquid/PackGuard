@@ -6,7 +6,7 @@ public class WarningCrashCallable implements ICrashCallable {
 
 	@Override
 	public String call() throws Exception {
-		return Util.getWarningSummary(true);
+		return Util.getWarningSummary(true, ", ");
 	}
 
 	@Override

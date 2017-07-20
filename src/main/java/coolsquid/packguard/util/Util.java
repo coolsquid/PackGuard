@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
-import com.google.common.collect.Iterators;
-
 import coolsquid.packguard.PackGuard;
 import coolsquid.packguard.config.ConfigManager;
+
+import com.google.common.collect.Iterators;
 
 public class Util {
 
@@ -60,14 +60,14 @@ public class Util {
 		}
 	}
 
-	public static String getWarningSummary(boolean includeChecksum) {
+	public static String getWarningSummary(boolean includeChecksum, String separator) {
 		StringBuilder b = new StringBuilder();
 		for (String warning : PackGuard.WARNINGS) {
-			b.append(warning).append("\n");
+			b.append(warning).append(separator);
 		}
 		if (includeChecksum && PackGuard.checksumWarning != null) {
 			return b.append(PackGuard.checksumWarning).toString();
 		}
-		return b.toString();
+		return PackGuard.WARNINGS.isEmpty() ? b.toString() : b.substring(0, b.length() - separator.length());
 	}
 }
