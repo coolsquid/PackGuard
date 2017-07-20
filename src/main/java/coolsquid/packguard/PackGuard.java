@@ -29,7 +29,7 @@ public class PackGuard {
 
 	public static final String MODID = "packguard";
 	public static final String NAME = "PackGuard";
-	public static final String VERSION = "2.3.2";
+	public static final String VERSION = "2.3.3";
 	public static final String UPDATE_JSON = "https://coolsquid.me/api/version/packguard.json";
 
 	public static final Logger LOGGER = LogManager.getFormatterLogger("PackGuard");
@@ -46,6 +46,12 @@ public class PackGuard {
 				checksumWarning = "Checksum mismatch: expected " + ConfigManager.expectedChecksum + ", got " + checksum;
 			}
 		}
+		for (ModContainer loadedMod : Loader.instance().getModList()) {
+			ModData mod = ConfigManager.expectedMods.get(loadedMod.getModId());
+			if (mod == null) {
+				WARNINGS.add("Added mod: " + loadedMod.getModId() + " v" + loadedMod.getVersion());
+			}
+		}
 		for (ModData mod : ConfigManager.expectedMods.values()) {
 			ModContainer loadedMod = Loader.instance().getIndexedModList().get(mod.id);
 			if (mod.optional) {
@@ -57,12 +63,7 @@ public class PackGuard {
 						+ loadedMod.getVersion() + " was loaded");
 			}
 		}
-		for (ModContainer loadedMod : Loader.instance().getModList()) {
-			ModData mod = ConfigManager.expectedMods.get(loadedMod.getModId());
-			if (mod == null) {
-				WARNINGS.add("Added mod: " + loadedMod.getModId() + " v" + loadedMod.getVersion());
-			}
-		}
+		WARNINGS.sort((s1, s2) -> s1.compareTo(s2));
 		if (!WARNINGS.isEmpty() || checksumWarning != null) {
 			if (ConfigManager.crashReportWarning) {
 				FMLCommonHandler.instance().registerCrashCallable(new WarningCrashCallable());
