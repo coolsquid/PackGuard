@@ -84,7 +84,6 @@ public class PackGuard {
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT && ConfigManager.developmentMode) {
 			ClientCommandHandler.instance.registerCommand(new CommandPackGuard());
 		}
-		throw new RuntimeException();
 	}
 
 	@EventHandler
