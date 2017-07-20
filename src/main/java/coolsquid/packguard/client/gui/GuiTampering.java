@@ -1,12 +1,13 @@
 package coolsquid.packguard.client.gui;
 
-import coolsquid.packguard.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import coolsquid.packguard.PackGuard;
+import coolsquid.packguard.util.Util;
 
 @SideOnly(Side.CLIENT)
 public class GuiTampering extends GuiScreen {
@@ -16,21 +17,30 @@ public class GuiTampering extends GuiScreen {
 		GuiButton button = new GuiButton(1, 0, 0, "I understand, let me continue");
 		button.x = this.width / 2 - button.width / 2;
 		button.y = this.height / 2 + this.height / 3;
+		button.packedFGColour = 10526880;
 		this.buttonList.add(button);
 	}
 
 	@Override
 	public void drawScreen(int mouseRelX, int mouseRelY, float tickTime) {
-		GlStateManager.disableTexture2D();
-		GlStateManager.enableTexture2D();
 		this.drawDefaultBackground();
 		super.drawScreen(mouseRelX, mouseRelY, tickTime);
-		this.drawCenteredString(this.fontRenderer, "The pack has been tampered with. Do not report any errors.",
-				this.width / 2, this.height / 2 - 80, 0xFF0000);
+		double multiplier = 1D / 240D * this.height;
+		int baseHeight = this.height / 2 + 40 - Math.min(PackGuard.WARNINGS.size() * 5, 60);
+		this.drawCenteredString(this.fontRenderer, "The pack has been tampered with.", this.width / 2,
+				(int) (baseHeight - 80 * multiplier), 16777215);
+		this.drawCenteredString(this.fontRenderer, "Do not report any errors to the pack author.", this.width / 2,
+				(int) (baseHeight - 60 * multiplier), 10526880);
 		int a = 40;
-		for (String line : Util.getWarningSummary(false).split(System.lineSeparator())) {
-			this.drawCenteredString(this.fontRenderer, line, this.width / 2, this.height / 2 - a, 0xFFFF00);
-			a -= 30;
+		String[] summary = Util.getWarningSummary(false).split(System.lineSeparator());
+		for (int i = 0; i < Math.min(summary.length, 12); i++) {
+			this.drawCenteredString(this.fontRenderer, summary[i], this.width / 2, (int) (baseHeight - a * multiplier),
+					10526880);
+			a -= 10;
+		}
+		if (summary.length > 12) {
+			this.drawCenteredString(this.fontRenderer, "And " + (summary.length - 12) + " more", this.width / 2,
+					(int) (baseHeight - a * multiplier), 10526880);
 		}
 	}
 
