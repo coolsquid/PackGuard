@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
+import com.google.common.collect.Iterators;
+
 import coolsquid.packguard.PackGuard;
 import coolsquid.packguard.config.ConfigManager;
-
-import com.google.common.collect.Iterators;
 
 public class Util {
 

@@ -3,6 +3,15 @@ package coolsquid.packguard;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import coolsquid.packguard.config.ConfigManager;
+import coolsquid.packguard.util.CommandPackGuard;
+import coolsquid.packguard.util.IntactNoticeCrashCallable;
+import coolsquid.packguard.util.ModData;
+import coolsquid.packguard.util.Util;
+import coolsquid.packguard.util.WarningCrashCallable;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -13,16 +22,6 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
-
-import coolsquid.packguard.config.ConfigManager;
-import coolsquid.packguard.util.CommandPackGuard;
-import coolsquid.packguard.util.IntactNoticeCrashCallable;
-import coolsquid.packguard.util.ModData;
-import coolsquid.packguard.util.Util;
-import coolsquid.packguard.util.WarningCrashCallable;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(modid = PackGuard.MODID, name = PackGuard.NAME, version = PackGuard.VERSION, updateJSON = PackGuard.UPDATE_JSON)
 public class PackGuard {
@@ -49,17 +48,17 @@ public class PackGuard {
 		for (ModContainer loadedMod : Loader.instance().getModList()) {
 			ModData mod = ConfigManager.expectedMods.get(loadedMod.getModId());
 			if (mod == null) {
-				WARNINGS.add("Added mod: " + loadedMod.getModId() + " v" + loadedMod.getVersion());
+				WARNINGS.add("Added mod: " + loadedMod.getModId() + " version " + loadedMod.getVersion());
 			}
 		}
 		for (ModData mod : ConfigManager.expectedMods.values()) {
 			ModContainer loadedMod = Loader.instance().getIndexedModList().get(mod.id);
-			if (mod.optional) {
-				;
-			} else if (loadedMod == null) {
-				WARNINGS.add("Missing mod: " + mod.id + " v" + mod.version);
-			} else if (ConfigManager.detectVersionChanges && !loadedMod.getVersion().equals(mod.version)) {
-				WARNINGS.add("Version mismatch: expected " + mod.id + " v" + mod.version + ", but v"
+			if (loadedMod == null) {
+				if (!mod.optional) {
+					WARNINGS.add("Missing mod: " + mod.id + " version " + mod.textVersion);
+				}
+			} else if (ConfigManager.detectVersionChanges && !mod.version.containsVersion(loadedMod.getProcessedVersion())) {
+				WARNINGS.add("Version mismatch: expected " + mod.id + " version " + mod.textVersion + ", but version "
 						+ loadedMod.getVersion() + " was loaded");
 			}
 		}
